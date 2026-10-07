@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ab899f30b4847489dd4092f19fccad, type: 3}
+  m_Name: CrowdLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::Esc.Herd.CrowdLibraryAsset
+  SheepIdle:
+  - {fileID: 4300000, guid: dabb470ca82d01542a65b56d1fe4ebfb, type: 2}
+  - {fileID: 4300000, guid: 1ae7c3509380ab24ba603f44c4a1c800, type: 2}
+  - {fileID: 4300000, guid: fd851598c7153bd4496cee2a553e3117, type: 2}
+  - {fileID: 4300000, guid: e1b800e9287731a44a59f00dec7edaae, type: 2}
+  SheepWalk:
+  - {fileID: 4300000, guid: c3a5555b894e4dd45a8c831614ffa75d, type: 2}
+  - {fileID: 4300000, guid: f52006f130599d84a99e6edbb4146596, type: 2}
+  - {fileID: 4300000, guid: ef70b7effe23f6644a349f641e45fed0, type: 2}
+  - {fileID: 4300000, guid: 1b82bcd185f6c5343b51bf5ee7be45d2, type: 2}
+  - {fileID: 4300000, guid: 19f0a5623c117c34ba4497100f9b717c, type: 2}
+  - {fileID: 4300000, guid: af6480a62f6726047b32dd47067aa0e1, type: 2}
+  - {fileID: 4300000, guid: dfe891957bc9cf342bc274426bb7a758, type: 2}
+  - {fileID: 4300000, guid: bee23081b448c67418c64d9a1a9df441, type: 2}
+  SheepDeath:
+  - {fileID: 4300000, guid: 172251db8d317634390f4ba4cb3808f4, type: 2}
+  - {fileID: 4300000, guid: 61a55d0b22ec4af48afda108fe5d5d02, type: 2}
+  - {fileID: 4300000, guid: 11cccd1fd0e2b7b40be3cb1d760da677, type: 2}
+  - {fileID: 4300000, guid: 2ae1a3c4397f3aa45943208cf840ea9b, type: 2}
+  - {fileID: 4300000, guid: 4db7f665680add543bb18082f491d096, type: 2}
+  - {fileID: 4300000, guid: ca0e64bfc33db0b4fa010b881c47b5c8, type: 2}
+  WolfIdle:
+  - {fileID: 4300000, guid: 5e5d286d4fccb704290759765595a487, type: 2}
+  - {fileID: 4300000, guid: ea83c9cb22babc849b2847e9c81b4379, type: 2}
+  - {fileID: 4300000, guid: b26ca4fa9d2959e40861603367228b01, type: 2}
+  - {fileID: 4300000, guid: 08928908921bbf142af1e7f970abe92e, type: 2}
+  WolfRun:
+  - {fileID: 4300000, guid: 276f3c6d27d685c4f9d6063305e5979b, type: 2}
+  - {fileID: 4300000, guid: 47e753b72c336fa44af059edf074c017, type: 2}
+  - {fileID: 4300000, guid: 546d7af913c62db4b8cad8cc9ca6bdd0, type: 2}
+  - {fileID: 4300000, guid: 810bc3f62af93eb41ab555b831709420, type: 2}
+  - {fileID: 4300000, guid: b02f7d3ba78a33a4e8ac743f544760f6, type: 2}
+  - {fileID: 4300000, guid: 0f9d672e93a4a8b4290cb0cbb84c5c1d, type: 2}
+  - {fileID: 4300000, guid: fcac42fd26927e24a8ef9a184c24c979, type: 2}
+  - {fileID: 4300000, guid: d80a06ed7ac9d91459ab338ddb241226, type: 2}
+  WolfAttack:
+  - {fileID: 4300000, guid: eecc36de229ab0f4db230c4387599f5d, type: 2}
+  - {fileID: 4300000, guid: 6dffab6e9fca36541b1289f734238382, type: 2}
+  - {fileID: 4300000, guid: 9f99181630bc2fd4b80be541a76389de, type: 2}
+  - {fileID: 4300000, guid: 715453f400e37ab46b3155a19cbced1b, type: 2}
+  - {fileID: 4300000, guid: 60aabf226ab21d14c8e417b32b91e07c, type: 2}
+  - {fileID: 4300000, guid: c730bcb561554924e97a87568bb40e83, type: 2}
+  WolfDeath:
+  - {fileID: 4300000, guid: bbdb6dc8817fd2248a29a3a632cd2847, type: 2}
+  - {fileID: 4300000, guid: 1d066e9e9195abd4980ac33dc88dde2e, type: 2}
+  - {fileID: 4300000, guid: 3ac0f56cedd1e3e41884fde7f843ea0b, type: 2}
+  - {fileID: 4300000, guid: 3d6195b075a90c1418fa3bd34e4cb15d, type: 2}
+  - {fileID: 4300000, guid: d3918ca53737b884aafadbc77894d4d9, type: 2}
+  - {fileID: 4300000, guid: 2a701fa496bc1194aaa83e722cef8f37, type: 2}
+  SheepMaterial: {fileID: 2100000, guid: 4eb57f29cdf0989439289321998330c9, type: 2}
+  WolfMaterial: {fileID: 2100000, guid: 6b80c70e4ad9b804eab3be22cbfb72a4, type: 2}
+  Fps: 12
