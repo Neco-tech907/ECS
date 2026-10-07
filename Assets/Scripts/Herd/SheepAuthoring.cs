@@ -34,8 +34,6 @@ namespace Esc.Herd
                 });
                 AddComponent<Dead>(entity);
                 SetComponentEnabled<Dead>(entity, false);
-                AddComponent<InPen>(entity);
-                SetComponentEnabled<InPen>(entity, false);
                 AddComponent(entity, new Stamina
                 {
                     Current = authoring.Stamina,

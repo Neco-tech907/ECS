@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 8606254236120630284}
   - component: {fileID: 7984782113799040007}
   - component: {fileID: 8571457971628334826}
-  - component: {fileID: 390896977690257476}
-  - component: {fileID: 8708482749333812604}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Untagged
@@ -20,6 +18,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+
 --- !u!4 &8606254236120630284
 Transform:
   m_ObjectHideFlags: 0
@@ -35,6 +34,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+
 --- !u!33 &7984782113799040007
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -43,6 +43,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8459090566866500146}
   m_Mesh: {fileID: 4300000, guid: 5e5d286d4fccb704290759765595a487, type: 2}
+
 --- !u!23 &8571457971628334826
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -92,36 +93,3 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &390896977690257476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8459090566866500146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 537f247a2f8944b4b8e7bcef7cfc7c17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Esc.Herd.WolfAuthoring
-  Speed: 6.5
-  Health: 30
-  AttackRange: 1.7
-  AttackDamage: 34
-  AttackInterval: 0.7
-  DamageTakenPerAttack: 16
-  CorpseTime: 1.25
---- !u!114 &8708482749333812604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8459090566866500146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c39062f69096f4abd6c1ee951ae64c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Esc.Herd.CrowdAnimAuthoring
-  Library: {fileID: 11400000, guid: 4c9b57dd1c01c614b8afbaa159210805, type: 2}
-  Species: 1

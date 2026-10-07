@@ -19,10 +19,8 @@ namespace Esc.Herd
                 return;
 
             float3 goalPosition = goalTransform.Position;
-            if (SystemAPI.TryGetSingleton<Shepherd>(out Shepherd shepherd) && shepherd.Calling)
-                goalPosition = shepherd.Position;
 
-            foreach (var move in SystemAPI.Query<RefRW<MoveTarget>>().WithAll<SheepTag>().WithDisabled<InPen>())
+            foreach (var move in SystemAPI.Query<RefRW<MoveTarget>>().WithAll<SheepTag>().WithDisabled<Dead>())
                 move.ValueRW.Position = goalPosition;
         }
     }
@@ -38,7 +36,7 @@ namespace Esc.Herd
 
             foreach (var (transform, move, stamina) in SystemAPI.Query<RefRW<LocalTransform>, RefRO<MoveTarget>, RefRW<Stamina>>()
                          .WithAll<SheepTag>()
-                         .WithDisabled<Dead, InPen>())
+                         .WithDisabled<Dead>())
             {
                 if (stamina.ValueRO.Exhausted || stamina.ValueRO.Current <= 0f)
                 {
