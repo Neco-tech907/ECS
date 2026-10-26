@@ -1,4 +1,5 @@
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 
@@ -8,17 +9,45 @@ namespace Esc.Herd
     [UpdateBefore(typeof(MoveToTargetSystem))]
     public partial struct HealthSystem : ISystem
     {
+        private EntityQuery _healthQuery;
+
+        [BurstCompile]
+        public void OnCreate(ref SystemState state)
+        {
+            _healthQuery = SystemAPI.QueryBuilder()
+                .WithAll<Health>()
+                .WithDisabled<Dead>()
+                .Build();
+        }
+
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            foreach (var (health, entity) in SystemAPI.Query<RefRO<Health>>()
-                         .WithDisabled<Dead>()
-                         .WithEntityAccess()
-                         .WithChangeFilter<Health>())
+            EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.TempJob);
+
+            var job = new HealthJob
             {
-                if (health.ValueRO.CurrentHealth <= 0f)
-                    state.EntityManager.SetComponentEnabled<Dead>(entity, true);
-            }
+                Ecb = ecb.AsParallelWriter()
+            };
+            state.Dependency = job.ScheduleParallel(_healthQuery, state.Dependency);
+
+            state.Dependency.Complete();
+            ecb.Playback(state.EntityManager);
+            ecb.Dispose();
+        }
+    }
+
+    [BurstCompile]
+    [WithChangeFilter(typeof(Health))]
+    public partial struct HealthJob : IJobEntity
+    {
+        public EntityCommandBuffer.ParallelWriter Ecb;
+
+        [BurstCompile]
+        public void Execute([ChunkIndexInQuery] int chunkIndexInQuery, Entity entity, in Health health)
+        {
+            if (health.CurrentHealth <= 0f)
+                Ecb.SetComponentEnabled<Dead>(chunkIndexInQuery, entity, true);
         }
     }
 
@@ -27,19 +56,41 @@ namespace Esc.Herd
     [UpdateAfter(typeof(HealthSystem))]
     public partial struct StaminaSystem : ISystem
     {
+        private EntityQuery _staminaQuery;
+
+        [BurstCompile]
+        public void OnCreate(ref SystemState state)
+        {
+            _staminaQuery = SystemAPI.QueryBuilder()
+                .WithAll<Stamina>()
+                .WithDisabled<Dead>()
+                .Build();
+        }
+
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            float deltaTime = SystemAPI.Time.DeltaTime;
-
-            foreach (var stamina in SystemAPI.Query<RefRW<Stamina>>().WithDisabled<Dead>())
+            var job = new StaminaJob
             {
-                float restored = math.min(stamina.ValueRO.Max, stamina.ValueRO.Current + stamina.ValueRO.RegenPerSecond * deltaTime);
-                stamina.ValueRW.Current = restored;
+                DeltaTime = SystemAPI.Time.DeltaTime
+            };
+            state.Dependency = job.ScheduleParallel(_staminaQuery, state.Dependency);
+        }
+    }
 
-                if (stamina.ValueRO.Exhausted && restored >= stamina.ValueRO.Max * 0.5f)
-                    stamina.ValueRW.Exhausted = false;
-            }
+    [BurstCompile]
+    public partial struct StaminaJob : IJobEntity
+    {
+        public float DeltaTime;
+
+        [BurstCompile]
+        public void Execute(ref Stamina stamina)
+        {
+            float restored = math.min(stamina.Max, stamina.Current + stamina.RegenPerSecond * DeltaTime);
+            stamina.Current = restored;
+
+            if (stamina.Exhausted && restored >= stamina.Max * 0.5f)
+                stamina.Exhausted = false;
         }
     }
 }

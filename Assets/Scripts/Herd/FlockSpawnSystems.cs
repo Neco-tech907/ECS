@@ -1,3 +1,4 @@
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -12,6 +13,8 @@ namespace Esc.Herd
         {
             if (!SystemAPI.TryGetSingleton<PrefabsHolder>(out PrefabsHolder prefabs) || prefabs.SheepPrefab == Entity.Null)
                 return;
+
+            state.Dependency.Complete();
 
             ComponentLookup<LocalTransform> transformLookup = SystemAPI.GetComponentLookup<LocalTransform>(true);
             if (!transformLookup.TryGetComponent(prefabs.SheepPrefab, out LocalTransform prefabTransform))
@@ -68,17 +71,46 @@ namespace Esc.Herd
         }
     }
 
+    [BurstCompile]
     [UpdateAfter(typeof(HealthSystem))]
     public partial struct DeadSheepDestroySystem : ISystem
     {
+        private EntityQuery _deadSheepQuery;
+
+        [BurstCompile]
+        public void OnCreate(ref SystemState state)
+        {
+            _deadSheepQuery = SystemAPI.QueryBuilder()
+                .WithAll<SheepTag, Dead>()
+                .Build();
+        }
+
+        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
-            foreach (var (_, entity) in SystemAPI.Query<RefRO<SheepTag>>().WithAll<Dead>().WithEntityAccess())
-                ecb.DestroyEntity(entity);
+            EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.TempJob);
 
+            var job = new DeadSheepDestroyJob
+            {
+                Ecb = ecb.AsParallelWriter()
+            };
+            state.Dependency = job.ScheduleParallel(_deadSheepQuery, state.Dependency);
+
+            state.Dependency.Complete();
             ecb.Playback(state.EntityManager);
             ecb.Dispose();
+        }
+    }
+
+    [BurstCompile]
+    public partial struct DeadSheepDestroyJob : IJobEntity
+    {
+        public EntityCommandBuffer.ParallelWriter Ecb;
+
+        [BurstCompile]
+        public void Execute([ChunkIndexInQuery] int chunkIndexInQuery, Entity entity)
+        {
+            Ecb.DestroyEntity(chunkIndexInQuery, entity);
         }
     }
 }
